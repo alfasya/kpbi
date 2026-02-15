@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from mangum import Mangum
+
 from data import kamus
 from cors import origins
 
@@ -31,3 +33,5 @@ async def get_kata(kata):
         if k["kata"] == kata:
             return k
     return { "error" : "kata tidak ditemukan." }
+
+handler = Mangum(app)
