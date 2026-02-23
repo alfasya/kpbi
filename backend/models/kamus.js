@@ -59,13 +59,13 @@ const Kbbi = sequelize.define(
     }
 );
 
-async function syncModel() {
+async function syncKamus() {
     try {
         await Kbbi.sync();
-        console.log("Model synchronized successfully.");
+        console.log("Kamus synchronized successfully.");
     } catch(err) {
         console.log("Internal server error.");
     }
 }
 
-export { syncModel, Kbbi }
+export { syncKamus, Kbbi }

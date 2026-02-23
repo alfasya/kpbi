@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
 async function connectDb() {
     try {
         await sequelize.authenticate();
-        console.log("Databse has been etablished successfully.");
+        console.log("Database has been etablished successfully.");
     } catch(err) {
         console.log("Internal server error.", err);
     }
