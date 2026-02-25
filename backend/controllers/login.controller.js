@@ -1,6 +1,9 @@
 import { User } from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
+
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 async function login(req, res) {
     const { username, password } = req.body;
@@ -37,10 +40,12 @@ async function login(req, res) {
             });   
         }
 
+        const token = jwt.sign({ username: username }, JWT_SECRET_KEY, { expiresIn: "1h" });
+
         res.status(200).json({
             message: "User logged in.",
-            token: "",
-        })
+            token: token,
+        });
     } catch(err) {
         res.json(500).status({
             error: {
