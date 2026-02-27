@@ -1,9 +1,9 @@
-import { pool } from '../db.config.js';
+import { pool } from './config.db.js';
 
 async function queryKBBI(kata) {
     try {
         const result = await pool.query(
-            `SELECT (key, kelas, submakna) FROM kbbi WHERE key = $1`, [kata]
+            `SELECT key, kelas, submakna FROM kbbi WHERE key = $1`, [kata]
         );
 
         return result.rows;
