@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "server app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfasya/kpbi.git"
+  },
+  "author": "alfasya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alfasya/kpbi/issues"
+  },
+  "homepage": "https://github.com/alfasya/kpbi#readme",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  }
+}
