@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/kamus', kamusRouter);
+app.use('/api/v1/kamus', kamusRouter);
 
 async function startServer() {
     await startDb();
