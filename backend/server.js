@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 
 import { kamusRouter } from './routes/kamus.router.js';
+import { startDb } from './db/query.db.js';
 
 const PORT = process.env.PORT;
 
@@ -13,6 +14,11 @@ app.use(express.json());
 
 app.use('/kamus', kamusRouter);
 
-app.listen(PORT, 'localhost', () => {
-    console.log(`Server is listening at port ${PORT}...`);
-});
+async function startServer() {
+    await startDb();
+    app.listen(PORT, 'localhost', () => {
+        console.log(`Server is listening at port ${PORT}...`);
+    });
+}
+
+startServer();
