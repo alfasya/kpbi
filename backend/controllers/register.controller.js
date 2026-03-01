@@ -4,7 +4,6 @@ import { registerQuery, registerSave } from '../db/query.db.js';
 async function registerHandler(req, res) {
     const { username, password } = req.body;
 
-    //validating username
     if (username.length > 20 || username.length < 3) {
         return res.status(400).json({
             message: `Username's length must be between 3 and 20 character.`

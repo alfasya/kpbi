@@ -45,4 +45,16 @@ async function registerSave(username, hashed_password) {
     } 
 }
 
-export { queryKBBI, registerQuery, registerSave, startDb }
+async function loginQuery(username) {
+    try {
+        const result = await pool.query(
+            `SELECT username, hashed_password FROM users WHERE username = $1`, [username]
+        );
+
+        return result.rows;
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+export { queryKBBI, registerQuery, registerSave, loginQuery, startDb }
