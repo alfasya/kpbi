@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 
 import { kamusRouter } from './routes/kamus.router.js';
+import { registerRouter } from './routes/register.router.js';
 import { startDb } from './db/query.db.js';
 
 const PORT = process.env.PORT;
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/v1/kamus', kamusRouter);
+app.use('/api/v1/register', registerRouter);
 
 async function startServer() {
     await startDb();

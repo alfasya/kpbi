@@ -22,4 +22,27 @@ async function queryKBBI(kata) {
     }
 }
 
-export { queryKBBI, startDb }
+async function registerQuery(username) {
+    try {
+        const result = await pool.query(
+            `SELECT username FROM users WHERE username = $1`, [username]
+        );
+
+        return result.rows[0];
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+async function registerSave(username, hashed_password) {
+    try {
+        await pool.query(
+            `INSERT INTO users (username, hashed_password, created_at) VALUES ($1, $2, NOW())`, [username, hashed_password]
+        );
+
+    } catch(err) {
+        console.error(err);
+    } 
+}
+
+export { queryKBBI, registerQuery, registerSave, startDb }

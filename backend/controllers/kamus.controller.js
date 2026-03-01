@@ -1,4 +1,5 @@
 import { queryKBBI } from "../db/query.db.js";
+import { llmResponse } from "../ollama.js";
 
 async function cariKata(req, res) {
     const kata = req.params.kata.trim().toLowerCase();
@@ -18,8 +19,13 @@ async function cariKata(req, res) {
             });
         }
 
+        const llmResult = await llmResponse(kata);
+
         res.status(200).json({
-            message: result
+            message: {
+                definisi: result,
+                contoh: llmResult
+            }
         });
 
     } catch(err) {
