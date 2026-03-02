@@ -5,7 +5,9 @@ import cors from 'cors';
 import { kamusRouter } from './routes/kamus.router.js';
 import { registerRouter } from './routes/register.router.js';
 import { loginRouter } from './routes/login.router.js';
+import { profileRouter } from './routes/profile.router.js';
 import { startDb } from './db/query.db.js';
+import { auth } from './middlewares/auth.js';
 
 const PORT = process.env.PORT;
 
@@ -17,6 +19,7 @@ app.use(express.json());
 app.use('/api/v1/kamus', kamusRouter);
 app.use('/api/v1/register', registerRouter);
 app.use('/api/v1/login', loginRouter);
+app.use('/api/v1/profile', auth, profileRouter);
 
 async function startServer() {
     await startDb();
