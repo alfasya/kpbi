@@ -1,7 +1,7 @@
 import { queryKBBI } from "../db/query.db.js";
 import { llmResponse } from "../ollama.js";
 
-async function cariKata(req, res) {
+async function kamusHandler(req, res) {
     const kata = req.params.kata.trim().toLowerCase();
 
     if (typeof(kata) != 'string' || kata.length >= 50) {
@@ -10,7 +10,7 @@ async function cariKata(req, res) {
         });
     }
 
-    try {
+    try {   
         const result = await queryKBBI(kata);
 
         if (result.length === 0) {
@@ -19,12 +19,9 @@ async function cariKata(req, res) {
             });
         }
 
-        const llmResult = await llmResponse(kata);
-
         res.status(200).json({
             message: {
                 definisi: result,
-                contoh: llmResult
             }
         });
 
@@ -35,4 +32,22 @@ async function cariKata(req, res) {
     }
 }
 
-export { cariKata }
+async function generateHandler(req, res) {
+    const kata = req.params.kata.trim().toLowerCase();
+
+    try {
+        const response = await llmResponse(kata)
+
+        res.status(200).json({
+            message: 'success',
+            response: response
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            error: 'Internal server error.'
+        });
+    }
+}
+
+export { kamusHandler, generateHandler }
