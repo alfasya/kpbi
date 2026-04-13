@@ -62,15 +62,15 @@ async function getFunc(e) {
     textList.classList.add('text-list')
     llm.appendChild(textList)
 
-    for (let i=0;i<generatedData.response.length;i++) {
+    for (let i=0;i<generatedData.response.response.length;i++) {
         const text = document.createElement('p')
         text.classList.add('text')
-        text.textContent = generatedData.response[i]
+        text.textContent = generatedData.response.response[i]
         textList.appendChild(text)
     }
 
     const llmNote = document.createElement('p')
     llmNote.classList.add('note')
-    llmNote.textContent = "Teks ini dibuat oleh model Qwen2.5"
+    llmNote.textContent = `Teks ini dibuat oleh model ${generatedData.response.model}`
     llm.appendChild(llmNote)
 }
