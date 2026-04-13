@@ -9,7 +9,7 @@ const PORT = process.env.PORT
 const app = express()
 
 app.use(cors({
-    origin: 'https://alfasya.my.id'
+    origin: 'http://localhost:5500'
 }))
 app.use(express.json())
 
