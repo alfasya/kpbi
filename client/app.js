@@ -15,62 +15,70 @@ async function getFunc(e) {
     const kata = searchBar.value
 
     const request = await fetch(`http://localhost:3000/api/kamus/${kata}`)
-    const data = await request.json()
 
-    const kbbiList = document.createElement("ol")
-    kbbiList.classList.add('kata')
-    kbbi.appendChild(kbbiList)
+    if (request.status == 404) {
+        const text = document.createElement('p')
+        text.classList.add('notFound')
+        text.textContent = 'Kata tidak ditemukan dalam KBBI'
+        kbbi.appendChild(text)
+    } else {
+        const data = await request.json()
 
-    for (let i=0;i<data.message.definisi.length;i++) {
+        const kbbiList = document.createElement("ol")
+        kbbiList.classList.add('kata')
+        kbbi.appendChild(kbbiList)
 
-        const definisi = document.createElement("li")
-        definisi.classList.add('definisi')
+        for (let i=0;i<data.message.definisi.length;i++) {
 
-        definisi.textContent = data.message.definisi[i].key
-        kbbiList.appendChild(definisi)
+            const definisi = document.createElement("li")
+            definisi.classList.add('definisi')
 
-        const keterangan = document.createElement('ul')
-        keterangan.classList.add('keterangan')
-        definisi.appendChild(keterangan)
+            definisi.textContent = data.message.definisi[i].key
+            kbbiList.appendChild(definisi)
 
-        for (let v in data.message.definisi[i]) {
-            if (v == 'kelas' || v == 'submakna') {
-                const list = document.createElement('li')
-                list.classList.add(v)
-                list.textContent = data.message.definisi[i][v]
-                keterangan.appendChild(list)
+            const keterangan = document.createElement('ul')
+            keterangan.classList.add('keterangan')
+            definisi.appendChild(keterangan)
+
+            for (let v in data.message.definisi[i]) {
+                if (v == 'kelas' || v == 'submakna') {
+                    const list = document.createElement('li')
+                    list.classList.add(v)
+                    list.textContent = data.message.definisi[i][v]
+                    keterangan.appendChild(list)
+                }
             }
         }
+
+        const kbbiNote = document.createElement('p')
+        kbbiNote.classList.add('note')
+        kbbiNote.textContent = "Bersumber dari KBBI"
+        kbbi.appendChild(kbbiNote)
+
+        const loading = document.createElement('p')
+        llm.classList.add('loading')
+        loading.textContent = 'Generating text...'
+        llm.appendChild(loading)
+
+        const response = await fetch(`http://localhost:3000/api/kamus/generate/${kata}`)
+        const generatedData = await response.json()
+
+        llm.replaceChildren()
+
+        const textList = document.createElement('ol');
+        textList.classList.add('text-list')
+        llm.appendChild(textList)
+
+        for (let i=0;i<generatedData.response.response.length;i++) {
+            const text = document.createElement('p')
+            text.classList.add('text')
+            text.textContent = generatedData.response.response[i]
+            textList.appendChild(text)
+        }
+
+        const llmNote = document.createElement('p')
+        llmNote.classList.add('note')
+        llmNote.textContent = `Teks ini dibuat oleh model ${generatedData.response.model}`
+        llm.appendChild(llmNote)
     }
-
-    const kbbiNote = document.createElement('p')
-    kbbiNote.classList.add('note')
-    kbbiNote.textContent = "Bersumber dari KBBI"
-    kbbi.appendChild(kbbiNote)
-
-    const loading = document.createElement('p')
-    llm.classList.add('loading')
-    loading.textContent = 'Generating text...'
-    llm.appendChild(loading)
-
-    const response = await fetch(`http://localhost:3000/api/kamus/generate/${kata}`)
-    const generatedData = await response.json()
-
-    llm.replaceChildren()
-
-    const textList = document.createElement('ol');
-    textList.classList.add('text-list')
-    llm.appendChild(textList)
-
-    for (let i=0;i<generatedData.response.response.length;i++) {
-        const text = document.createElement('p')
-        text.classList.add('text')
-        text.textContent = generatedData.response.response[i]
-        textList.appendChild(text)
-    }
-
-    const llmNote = document.createElement('p')
-    llmNote.classList.add('note')
-    llmNote.textContent = `Teks ini dibuat oleh model ${generatedData.response.model}`
-    llm.appendChild(llmNote)
 }

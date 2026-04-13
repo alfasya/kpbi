@@ -63,6 +63,7 @@ h1, #sub-title {
 #content {
     display: flex;
     padding-top: 20px;
+    padding-bottom: 20px;
     width: 65%;
     margin: auto;
     align-items: flex-start;
@@ -121,4 +122,8 @@ h1, #sub-title {
     font-style: italic;
     font-size: 0.8rem;
     align-self: flex-end;
+}
+
+.notFound {
+    margin: auto;
 }
