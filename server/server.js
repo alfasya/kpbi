@@ -8,9 +8,7 @@ const PORT = process.env.PORT
 
 const app = express()
 
-app.use(cors({
-    origin: 'https://alfasya.my.id'
-}))
+app.use(cors())
 app.use(express.json())
 
 app.use('/api/kamus', kamusRouter)

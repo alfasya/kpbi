@@ -17,9 +17,11 @@ async function getFunc(e) {
     const request = await fetch(`http://localhost:3000/api/kamus/${kata}`)
 
     if (request.status == 404) {
+        const data = await request.json()
+
         const text = document.createElement('p')
         text.classList.add('notFound')
-        text.textContent = 'Kata tidak ditemukan dalam KBBI'
+        text.textContent = data.message
         kbbi.appendChild(text)
     } else {
         const data = await request.json()

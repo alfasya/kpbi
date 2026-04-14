@@ -15,7 +15,7 @@ async function kamusHandler(req, res) {
 
         if (result.length === 0) {
             return res.status(404).json({
-                message: 'Kata tidak ditemukan.'
+                message: 'Kata tidak ditemukan dalam KBBI'
             });
         }
 
